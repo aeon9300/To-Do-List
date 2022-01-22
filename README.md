@@ -20,7 +20,15 @@ To Do list: list structure
 
 ## Getting Started
 
+* Install Node.js ^12.13
+
 https://github.com/aeon9300/To-Do-List.git
+
+* Install packages
+    npm install
+    
+* To run application using webpack-dev-server
+    npm start
 
 ## Author
 
