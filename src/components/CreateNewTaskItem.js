@@ -25,8 +25,6 @@ const formAddTask = () => {
     task.addTask();
     renderTaskItem(task);
     refreshTaskList();
-    newTask.value = '';
-    newTask.style.focus = false;
   });
   return form;
 };
