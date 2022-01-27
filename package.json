@@ -9,7 +9,7 @@
     "testEnvironment": "jsdom"
   },
   "version": "1.0.0",
-  "description": "",
+  "description": "![](https://img.shields.io/badge/Microverse-blueviolet)",
   "private": true,
   "scripts": {
     "test": "jest --coverage",
@@ -39,7 +39,7 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.25.4",
-    "hint": "^6.1.9",
+    "hint": "^6.1.3",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.4.7",
     "jest-localstorage-mock": "^2.4.18",
@@ -54,6 +54,8 @@
   },
   "dependencies": {
     "gh-pages": "^3.2.3",
-    "jquery": "^3.6.0"
-  }
+    "jquery": "^3.6.0",
+    "luxon": "^2.3.0"
+  },
+  "main": "webpack.config.js"
 }
