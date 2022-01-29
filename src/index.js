@@ -1,36 +1,62 @@
-import './assets/css/style.css';
-import './assets/img/todo-list-desktop-v-snapshot.png';
-import Task from './modules/Task.js';
-import DataStore from './modules/DataStore.js';
+import './style.css';
+import {
+  loadList,
+  addToDo,
+  list,
+} from './add-remove.js';
 
-import todoListHeading,
-{
-  checkRefreshButtonEvent,
-} from './components/HeadingTaskListItem.js';
-import renderTaskItem, { refreshTaskList } from './components/TaskListItem.js';
-import formAddTask from './components/CreateNewTaskItem.js';
-import btnClearAllCompleted from './components/ClearAllButton.js';
+const input = document.querySelector('.todoInput');
+const refresh = document.querySelector('#refresh');
 
-window.addEventListener('DOMContentLoaded', () => {
-  const todoList = document.querySelector('.todo-list');
-  todoList.appendChild(todoListHeading());
-  todoList.appendChild(formAddTask());
+let LIST = '';
+let id = '';
+const data = localStorage.getItem('todoStore');
 
-  if (localStorage.getItem('tasks') === 'undefined' || localStorage.getItem('tasks') === null) {
-    localStorage.setItem('tasks', JSON.stringify([]));
+if (data) {
+  LIST = JSON.parse(data);
+  id = LIST.length;
+  loadList(LIST);
+} else {
+  LIST = [];
+  id = 0;
+}
+
+const pushToDo = () => {
+  const data = localStorage.getItem('todoStore');
+
+  if (data) {
+    LIST = JSON.parse(data);
+    id = LIST.length;
+    loadList(LIST);
+  } else {
+    LIST = [];
+    id = 0;
   }
+  const toDo = input.value;
+  if (toDo) {
+    addToDo(toDo, id, false);
 
-  DataStore.tasks = JSON.parse(localStorage.getItem('tasks'));
+    LIST.push({
+      name: toDo,
+      index: id,
+      done: false,
+    });
+    loadList(LIST);
+    localStorage.setItem('todoStore', JSON.stringify(LIST));
+    id += 1;
+  }
+  input.value = '';
+};
 
-  DataStore.tasks.forEach((task) => {
-    if (task?.description === '') {
-      const taskToBeRemoved = new Task();
-      taskToBeRemoved.removeTask(parseInt(task.index, 10));
-      refreshTaskList();
-    } else renderTaskItem(task);
-  });
+document.addEventListener('keyup', (event) => {
+  if (event.keyCode === 13) {
+    pushToDo();
+  }
+});
 
-  todoList.parentNode.appendChild(btnClearAllCompleted());
-
-  checkRefreshButtonEvent();
+refresh.addEventListener('click', () => {
+  const arr = [];
+  window.localStorage.clear();
+  localStorage.setItem('todoStore', JSON.stringify(arr));
+  list.innerHTML = '';
 });
